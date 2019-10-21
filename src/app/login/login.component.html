@@ -1,0 +1,22 @@
+<div class="login-wrapper" fxLayout="row" fxLayoutAlign="center center">
+
+  <mat-card class="box" [hidden]="_auth.logedInvar||_auth.logedInvar==null||_auth.logedInvar==undefined">
+    <!-- <mat-card-header>
+      <mat-card-title>Ingresar</mat-card-title>
+    </mat-card-header> -->
+
+    <form class="example-form"  [formGroup]="registerForm" (ngSubmit)="login()">
+      <mat-card-content>
+        <mat-form-field class="example-full-width">
+          <input matInput formControlName="username" placeholder="Username">
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Password" type="password" formControlName="password">
+        </mat-form-field>
+      </mat-card-content>
+      <button mat-stroked-button color="accent" class="btn-block">Ingresar</button>
+    </form>
+  </mat-card>
+
+</div>

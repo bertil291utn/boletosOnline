@@ -16,7 +16,7 @@ export class AppComponent {
   title = 'boletosOnline';
   navItemsVar: NavItem[];
 
-  constructor(private _auth: AuthenticationService, private _apirest: ApirestService, private _route: Router,
+  constructor(public _auth: AuthenticationService, private _apirest: ApirestService, private _route: Router,
     private _location: Location, changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, public _navService: NavService) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();

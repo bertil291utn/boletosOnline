@@ -15,14 +15,9 @@ body {
   font-family: "Roboto", sans-serif;
 }
 
-
-
-  
 .login-wrapper {
   height: 100%;
 }
-
-
 
 .box {
   position: relative;
@@ -101,3 +96,6 @@ body {
   padding: 0.8375em 0;
 }
 
+.m-r-8 {
+  margin-right: 8px !important;
+}

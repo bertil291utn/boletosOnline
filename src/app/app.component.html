@@ -1,11 +1,41 @@
 <!-- Toolbar -->
-<mat-toolbar color="primary" class="app-header">
+<!-- <mat-toolbar color="primary" class="app-header" *ngIf="_auth.logedInvar">
   <div><a href="https://www.positronx.io" target="_blank" class="positronx">Boleto</a></div>
-  <span class="nav-tool-items">
-    <!-- <a mat-button *ngIf="!getloginVar" routerLink="login" routerLinkActive="active">INGRESAR</a> -->
-    <a mat-button *ngIf="_auth.logedInvar" mat-raised-button routerLink="registro">REGISTRAR</a>
-    <a mat-button *ngIf="_auth.logedInvar" (click)="logout()">SALIR</a>
+  <span class="nav-tool-items"> -->
+<!-- <a mat-button *ngIf="!getloginVar" routerLink="login" routerLinkActive="active">INGRESAR</a> -->
+<!-- <a mat-button mat-raised-button routerLink="registro">REGISTRAR</a>
+    <a mat-button (click)="logout()">SALIR</a>
   </span>
-</mat-toolbar>
+</mat-toolbar> -->
 
-<router-outlet></router-outlet>
+<div class="example-container" [class.example-is-mobile]="mobileQuery.matches" *ngIf="_auth.logedInvar">
+  <mat-toolbar color="primary" class="example-toolbar">
+    <button mat-icon-button (click)="snav.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <div><a href="#/" class="positronx">Coop.xyz</a></div>
+    <span class="example-fill-remaining-space"></span>
+    <!-- separador de toolbar en izquierda y derecha     
+    TITULO         BOTONES -->
+    <!-- <h1 class="example-app-name">Coop.xyz</h1> -->
+    <!-- traera el nombre d ela cooperativa -->
+    <span class="nav-tool-items">
+      <!-- <a mat-button mat-raised-button routerLink="registro">REGISTRAR</a> -->
+      <a mat-button (click)="logout()">SALIR</a>
+    </span>
+  </mat-toolbar>
+
+  <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
+    <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches"
+      fixedTopGap="56" role="navigation">
+      <mat-nav-list>
+        <app-menu-list-item *ngFor="let item of _navService.navItemsVar" [item]="item"></app-menu-list-item>
+      </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content style="padding: 20px;">
+      <router-outlet *ngIf="_auth.logedInvar"></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
+<router-outlet *ngIf="!_auth.logedInvar"></router-outlet>

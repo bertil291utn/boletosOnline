@@ -1,0 +1,15 @@
+<a *ngIf="item.enabled" mat-list-item (click)="onItemSelected(item)"
+  [ngClass]="{'active': item.route ? router.isActive(item.route, true): false, 'expanded': expanded}"
+  class="menu-list-item sidenav-item">
+  <mat-icon class="routeIcon sidenav-item">{{item.iconName}}</mat-icon>
+  {{item.displayName}}
+  <mat-icon *ngIf="item.children && item.children.length" id="icon_right"
+    [@indicatorRotate]="expanded ? 'expanded': 'collapsed'">
+    arrow_drop_down
+  </mat-icon>
+</a>
+<!-- [ngStyle]="{'padding-left': (depth * 12) + 'px'}" dentro del <a> paara ele spacio de icono a nombre de la lista en segunda genrnacion -->
+<div *ngIf="expanded">
+  <app-menu-list-item *ngFor="let child of item.children" [item]="child" [depth]="depth+1">
+  </app-menu-list-item>
+</div>

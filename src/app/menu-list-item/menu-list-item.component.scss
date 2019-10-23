@@ -1,0 +1,38 @@
+@import "../theme";
+
+:host {
+  display: flex;
+  flex-direction: column;
+  outline: none;
+  width: 100%;
+
+  .mat-list-item.active {
+    background-color: mat-color($app-primary, 50);
+      }
+  &:hover,
+  &:focus {
+    > .mat-list-item:not(.expanded) {
+      background-color: mat-color($app-primary, 100) !important;
+    }
+  }
+}
+
+.mat-list-item {
+  padding: 8px 0;
+  display: flex;
+  width: auto;
+
+  .routeIcon {
+    margin-right: 10px;
+  }
+}
+
+.sidenav-item {
+  font-size: 0.9rem;
+  height: auto;
+} //alto y tamno de icono y fuente
+
+.menu-list-item mat-icon#icon_right{
+  float: right;
+
+}

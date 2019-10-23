@@ -1,4 +1,4 @@
-<div class="login-wrapper" fxLayout="row" fxLayoutAlign="center center">
+<div class="login-wrapper" fxLayout="row" fxLayoutAlign="center center" *ngIf="!_auth.logedInvar">
 
   <mat-card class="box" [hidden]="_auth.logedInvar||_auth.logedInvar==null||_auth.logedInvar==undefined">
     <!-- <mat-card-header>

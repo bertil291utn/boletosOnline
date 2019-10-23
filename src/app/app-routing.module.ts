@@ -10,7 +10,6 @@ import { AuthadminGuard } from './services/authadmin.guard';
 
 const routes: Routes = [
 
-  { path: '', redirectTo: '/login', pathMatch: 'full', },
   {
     path: '', canActivate: [AuthGuard], children: [
       {
@@ -23,6 +22,7 @@ const routes: Routes = [
 
     ]
   },
+  { path: '', redirectTo: '/login', pathMatch: 'full', },
   { path: 'login', component: LoginComponent },
   { path: '**', redirectTo: '/login' }//when type any pages name
 

@@ -92,6 +92,7 @@ export class RegistroComponent implements OnInit {
       resp => {
         console.log(resp);
         this.registerForm.reset();
+        this.refreshTable();
         // this._router.navigate(['/login']);
       },
       err => { console.log(err); this.registerForm.reset(); }

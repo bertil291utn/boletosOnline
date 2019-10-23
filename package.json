@@ -1,13 +1,18 @@
 {
   "name": "boletos-online",
   "version": "0.0.0",
+  "engines": {
+    "node": "8.12.0",
+    "npm": "6.4.1"
+  },
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng server.js",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "postinstall": "ng build --aot --prod"
   },
   "private": true,
   "dependencies": {

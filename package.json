@@ -2,7 +2,7 @@
   "name": "boletos-online",
   "version": "0.0.0",
   "engines": {
-    "node": "8.12.0",
+    "node": "10.x",
     "npm": "6.4.1"
   },
   "scripts": {

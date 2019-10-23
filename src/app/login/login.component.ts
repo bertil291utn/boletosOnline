@@ -12,7 +12,7 @@ import { NavService } from '../services/nav.service';
 })
 export class LoginComponent implements OnInit {
   registerForm;
-  constructor(private _apirest: ApirestService, private _router: Router, private _auth: AuthenticationService,
+  constructor(private _apirest: ApirestService, private _router: Router, public _auth: AuthenticationService,
     private _navService: NavService) {
 
     this.registerForm = new FormGroup({

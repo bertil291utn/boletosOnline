@@ -20,7 +20,9 @@ export class NavService {
   async navItems() {
     if (await this._auth.checktokenImp()) {
       let varchecktoken = (await this._auth.checktokenImpData()).data.inicial;
-      let rutaActual = varchecktoken == 'A' ? 'admin' : (varchecktoken == 'C' ? 'dashboard' : 'dashboard');
+      // let rutaActual = varchecktoken == 'A' ? 'admin' : (varchecktoken == 'C' ? 'dashboard' : 'dashboard');
+      //en caso de que haya mas usuarios
+      let rutaActual = varchecktoken == 'A' ? 'admin' : 'dashboard';
       return [
         {
           displayName: 'Dashboard',
@@ -37,18 +39,35 @@ export class NavService {
               displayName: 'Usuarios',
               enabled: varchecktoken == 'A' ? true : false,
               route: 'registro'
-
             },
             {
               displayName: 'Conductores',
               enabled: varchecktoken == 'C' ? true : false,
-              route: 'registro'
-
+              route: 'conductor'
             }]
         }];
     }
   }
 
+
+  public async checktokenData() {
+    return await this._auth.checktokenImpData();
+  }
+
+  public async redirectTo() {
+    if (!await this._auth.checktokenImp())
+      return '/login';
+    let datatoken = await this.checktokenData();//get los dtoslos datos del token devuelto 
+    switch (datatoken.data.inicial) {
+      case 'A':
+        return '/admin';
+      case 'C':
+        return '/dashboarss';
+      // default:
+      //   this._router.navigate(['/dashboard']);
+      //   break;
+    }
+  }
 
   // public closeNav() {
   //   this.appDrawer.close();
@@ -58,3 +77,33 @@ export class NavService {
   //   this.appDrawer.open();
   // }
 }
+
+
+
+
+/****************REDIRECT EMPTY PATH SERVICE path:'' ************************************/
+
+@Injectable()
+export class RedirectToService {
+  
+  constructor(private _auth: AuthenticationService) {         }
+
+  public async checktokenData() {
+    return await this._auth.checktokenImpData();
+  }
+
+  public async redirectTo() {
+    if (!await this._auth.checktokenImp())
+      return '/login';
+    let datatoken = await this.checktokenData();//get los dtoslos datos del token devuelto 
+    switch (datatoken.data.inicial) {
+      case 'A':
+        return '/admin';
+      case 'C':
+        return '/dashboard';
+      // default:
+      //   this._router.navigate(['/dashboard']);
+      //   break;
+    }
+  }
+}//end class redirectto class

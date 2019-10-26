@@ -21,9 +21,9 @@ export class AppComponent {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
-    this.getlogin();
   }
   ngOnInit() {
+    this.getlogin();
     this.navitemsimp();
   }
 
@@ -40,12 +40,9 @@ export class AppComponent {
 
   }
   public async getlogin() {
+    this._auth.logedInvar = undefined;
     this._auth.logedInvar = await this._auth.checktokenImp();
     console.log('_auth.logedIn() is : ', this._auth.logedInvar);
-
-    // .then(resp => {
-    //   console.log('_auth.logedIn() is : ', resp);
-    // })
   }
 
 

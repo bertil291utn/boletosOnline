@@ -99,3 +99,12 @@ body {
 .m-r-8 {
   margin-right: 8px !important;
 }
+
+.mat-cell {
+  font-size: 0.75rem;
+}
+
+.mat-header-cell{
+  font-size: 0.9rem;
+  color: #272727;
+}

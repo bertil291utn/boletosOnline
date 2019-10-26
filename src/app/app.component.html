@@ -9,11 +9,12 @@
 </mat-toolbar> -->
 
 <div class="example-container" [class.example-is-mobile]="mobileQuery.matches" *ngIf="_auth.logedInvar">
+  <!-- show just when user is login -->
   <mat-toolbar color="primary" class="example-toolbar">
     <button mat-icon-button (click)="snav.toggle()">
       <mat-icon>menu</mat-icon>
     </button>
-    <div><a href="#/" class="positronx">Coop.xyz</a></div>
+    <div><a routerLink="" class="positronx">Coop.xyz</a></div>
     <span class="example-fill-remaining-space"></span>
     <!-- separador de toolbar en izquierda y derecha     
     TITULO         BOTONES -->
@@ -39,3 +40,4 @@
   </mat-sidenav-container>
 </div>
 <router-outlet *ngIf="!_auth.logedInvar"></router-outlet>
+<!-- show login when variable loged is false -->

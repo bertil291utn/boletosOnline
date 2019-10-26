@@ -6,6 +6,7 @@ import { ApirestService } from '../services/apirest.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DataSource } from '@angular/cdk/table';
 import { Observable } from 'rxjs';
+import { Usuarios } from '../interfaces/ObjetosInterface';
 
 
 @Component({
@@ -19,12 +20,12 @@ export class RegistroComponent implements OnInit {
   registrodatos = {};
   registerForm;
   tipouser;
-  dataSource = new UserDataSource(this._apirest);
-  displayedColumns: string[] = ['numeracion', 'username', 'name', 'email', 'tipo_user', 'opciones'];
-  registroisactive: boolean = false;
+  dataSource = new UserDataSource(this._apirest);// sourde para poner en la tabla
+  displayedColumns: string[] = ['numeracion', 'username', 'name', 'email', 'tipo_user', 'opciones'];//columnas de tabla
+  registroisactive: boolean = false;//para ver/esconder el formulario d eregistro
+  hide = true;//para visulizar/hide el password input
 
-
-  constructor(private _auth: AuthenticationService, private _router: Router, private _apirest: ApirestService,
+  constructor(private _apirest: ApirestService,
     private fb: FormBuilder, public dialog: MatDialog) {
     this.initFormulario();
     //this.initform2();
@@ -103,15 +104,6 @@ export class RegistroComponent implements OnInit {
 }//end class
 
 
-//interface usuarios
-export interface Usuarios {
-  username: string;
-  email: string;
-  password?: string;
-  name: string;
-  tipo_user: string;
-  session: string;
-}
 
 //class userdatasoyrce
 export class UserDataSource extends DataSource<any> {

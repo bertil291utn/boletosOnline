@@ -30,4 +30,4 @@ export class AuthGuard implements CanActivate {
 
 
 
-}//end vlass
+}//end class

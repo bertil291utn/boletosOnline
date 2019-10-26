@@ -1,0 +1,24 @@
+table {
+  width: 100%;
+}
+
+[cell-centered] {
+  text-align: center;
+}
+
+#previewfoto {
+  width: 8%;
+  height: 12%;
+  position: relative;
+  float: right;
+  margin: 2%;
+}
+
+mat-label#imagen {
+  font-size: 0.7rem;
+  color: red;
+}
+
+.button-space {
+  margin: 1%;
+}

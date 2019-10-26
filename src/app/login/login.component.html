@@ -1,11 +1,13 @@
-<div class="login-wrapper" fxLayout="row" fxLayoutAlign="center center" *ngIf="!_auth.logedInvar">
+<div class="login-wrapper" fxLayout="row" fxLayoutAlign="center center">
 
-  <mat-card class="box" [hidden]="_auth.logedInvar||_auth.logedInvar==null||_auth.logedInvar==undefined">
+  <!-- <mat-card class="box"  [style.display]="!_auth.logedInvar ? 'block' : 'none'"> -->
+  <mat-card class="box" *ngIf="!_auth.logedInvar">
+    <!-- [hidden]="_auth.logedInvar||_auth.logedInvar==null||_auth.logedInvar==undefined" *ngIf="!_auth.logedInvar" -->
     <!-- <mat-card-header>
       <mat-card-title>Ingresar</mat-card-title>
     </mat-card-header> -->
 
-    <form class="example-form"  [formGroup]="registerForm" (ngSubmit)="login()">
+    <form class="example-form" [formGroup]="registerForm" (ngSubmit)="login()">
       <mat-card-content>
         <mat-form-field class="example-full-width">
           <input matInput formControlName="username" placeholder="Username">

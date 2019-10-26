@@ -1,7 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Usuarios } from '../registro/registro.component';
+import { Observable, Observer } from 'rxjs';
+import 'rxjs/add/operator/map';
+
+import { Drivers, Usuarios } from '../interfaces/ObjetosInterface';
+import { environment } from 'src/environments/environment';
+
+// const urlCoopMain = 'http://localhost/wsboleto/';
+const urlCoopMain = 'https://wsappflota.herokuapp.com/';
 
 @Injectable({
   providedIn: 'root'
@@ -88,3 +94,96 @@ export class ApirestService {
   }
 
 }//end class
+
+
+
+
+
+
+/****************************apirst para drivers********************************************/
+@Injectable({
+  providedIn: 'root'
+})
+export class ApirestConductoresService {
+
+  constructor(private http: HttpClient) { }
+
+  public deleteDriver(id_cond) {
+    let usuarioObject =
+    {
+      "id_cond": id_cond
+    };
+    return this.http.put(urlCoopMain + 'conductores/delete', usuarioObject, { responseType: 'json' });
+
+  }
+
+
+  public getallDrivers(): Observable<Drivers[]> {
+    return this.http.get<Drivers[]>(urlCoopMain + 'conductores');
+
+    /*getData(): Observable<any> {
+    return Observable.create((observer: Observer) => {
+        this.http.get(url)
+          .pipe(catchError(this.handleError)
+          .subscribe(res => {
+              // Do my service.ts logic.
+              // ...
+              observer.next(res)
+              observer.complete()
+          }, err => observer.error(err))
+    })
+  }*/
+  }
+
+  getUserByUserName(username) {
+    return this.http.get(urlCoopMain + `username=id${username}`);
+  }
+
+  public updateDriver(driver) {
+    let data = new FormData();
+    data.append('file', driver.foto);
+    data.append('public_id', `driver/${driver.cedula}`);
+    data.append('ID_COND', driver.id_cond);
+    data.append('CORREO_COND', driver.email);
+    data.append('DIRECCION_COND', driver.direccion);
+    data.append('TELEFONO_COND', driver.telefono);
+    data.append('ESTADO_COND', driver.estado);
+    return this.http.post(urlCoopMain + 'conductores/update', data, { responseType: 'json' });
+  }
+
+  
+  public registerDriver(driver) {
+    let data = new FormData();
+    data.append('file', driver.foto);
+    data.append('public_id', `driver/${driver.cedula}`);
+    data.append('ID_EMPRESA', driver.id_empresa);
+    data.append('CEDULA_COND', driver.cedula);
+    data.append('NOMBRE_COND', driver.nombres);
+    data.append('APELLIDO_COND', driver.apellidos);
+    data.append('CORREO_COND', driver.email);
+    data.append('DIRECCION_COND', driver.direccion);
+    data.append('TELEFONO_COND', driver.telefono);
+    data.append('ESTADO_COND', driver.estado);
+    return this.http.post(urlCoopMain + 'conductores', data, { responseType: 'json' });
+  }
+
+
+}//end class condcutores
+
+
+
+/****************************apirst para empresas cooperativas********************************************/
+@Injectable({
+  providedIn: 'root'
+})
+export class ApirestEmpresasService {
+
+  constructor(private http: HttpClient) { }
+
+  public getallEmpresas() {
+    return this.http.get(urlCoopMain + 'empresa/all');
+  }
+
+
+
+}//end class empresas

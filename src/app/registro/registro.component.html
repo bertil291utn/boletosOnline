@@ -15,7 +15,11 @@
           <input matInput placeholder="Nombre" formControlName="name">
         </mat-form-field>
         <mat-form-field class="m-r-8">
-          <input matInput placeholder="Password" type="password" formControlName="password" required>
+          <!-- <input matInput placeholder="Password" type="password" formControlName="password" required> -->
+          <input matInput placeholder="Password" [type]="hide ? 'password' : 'text'" formControlName="password" required>
+          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
         </mat-form-field>
 
         <mat-form-field class="m-r-8">
@@ -44,6 +48,8 @@
       <mat-icon>refresh</mat-icon>
     </button>
   </span>
+
+  
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
     <ng-container matColumnDef="numeracion">

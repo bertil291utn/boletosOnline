@@ -7,23 +7,26 @@ import { AuthenticationService } from './authentication.service';
   providedIn: 'root'
 })
 export class AuthadminGuard implements CanActivate {
+  datatoken;
+
   constructor(private _router: Router, private _auth: AuthenticationService) { }
 
   async canActivate() {
-    let datatoken = await this._auth.checktokenImpData();
-    if (datatoken.data.inicial == 'A')
+    this.datatoken = await this.checktokenData();
+    if (this.datatoken.data.inicial == 'A')
       return true;
     this.typeuserRouting();
     return false;
   }
 
 
-
+  public async checktokenData() {
+    return await this._auth.checktokenImpData();
+  }
 
   async typeuserRouting() {
-    let datatoken = await this._auth.checktokenImpData();
-    console.log('datatoken ', datatoken);
-    switch (datatoken.data.inicial) {
+    console.log('datatoken ', this.datatoken);
+    switch (this.datatoken.data.inicial) {
       case 'C':
         this._router.navigate(['/dashboard']);
         break;
@@ -34,6 +37,47 @@ export class AuthadminGuard implements CanActivate {
       default:
         this._router.navigate(['/dashboard']);
         break;
+    }
+  }
+
+}//end class
+
+
+
+
+/****************COOPERAITVA GUARD***************************/
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthCoopGuard implements CanActivate {
+  datatoken;
+
+  constructor(private _router: Router,private _adminguard:AuthadminGuard) { }
+
+  async canActivate() {
+    this.datatoken = await this._adminguard.checktokenData();
+    if (this.datatoken.data.inicial == 'C')
+      return true;
+    this.typeuserRouting();
+    return false;
+  }
+
+
+  
+  async typeuserRouting() {
+    console.log('datatoken ', this.datatoken);
+    switch (this.datatoken.data.inicial) {
+      case 'A':
+        this._router.navigate(['/admin']);
+        break;
+      // case 'V':
+      //   this._router.navigate(['/visitante']);
+      //   break;
+
+      // default:
+      //   this._router.navigate(['/dashboard']);
+      //   break;
     }
   }
 

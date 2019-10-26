@@ -5,7 +5,9 @@ import { AdminComponent } from './admin/admin.component';
 import { CooperativaComponent } from './cooperativa/cooperativa.component';
 import { RegistroComponent } from './registro/registro.component';
 import { AuthGuard } from './services/auth.guard';
-import { AuthadminGuard } from './services/authadmin.guard';
+import { AuthadminGuard, AuthCoopGuard } from './services/authadmin.guard';
+import { ConductorComponent } from './conductor/conductor.component';
+import { RedirectToService } from './services/nav.service';
 
 
 const routes: Routes = [
@@ -14,17 +16,26 @@ const routes: Routes = [
     path: '', canActivate: [AuthGuard], children: [
       {
         path: '', canActivate: [AuthadminGuard], children: [
+          { path: '', redirectTo: '/admin', pathMatch: 'full' },
           { path: 'registro', component: RegistroComponent },
           { path: 'admin', component: AdminComponent }
         ]
       },
-      { path: 'dashboard', component: CooperativaComponent }
+      {
+        path: '', canActivate: [AuthCoopGuard], children: [
+          { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+          { path: 'dashboard', component: CooperativaComponent },
+          { path: 'conductor', component: ConductorComponent },
+        ]
+      },
 
     ]
   },
-  { path: '', redirectTo: '/login', pathMatch: 'full', },
+  // { path: '',redirectTo:(r:RedirectToService)=>{return r.redirectTo()}, pathMatch: 'full', },
+  // { path: '', redirectTo: '/login', pathMatch: 'full', },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
-  { path: '**', redirectTo: '/login' }//when type any pages name
+  { path: '**', redirectTo: 'login' }//when type any pages name
 
 ];
 

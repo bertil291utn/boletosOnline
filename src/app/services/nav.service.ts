@@ -44,8 +44,16 @@ export class NavService {
               displayName: 'Conductores',
               enabled: varchecktoken == 'C' ? true : false,
               route: 'conductor'
-            }]
-        }];
+            }
+          ]
+        },
+        {
+          displayName: 'Buses',
+          iconName: 'directions_bus',
+          enabled:  varchecktoken == 'C' ? true : false,
+          route: 'bus'
+        }
+      ];
     }
   }
 
@@ -54,56 +62,4 @@ export class NavService {
     return await this._auth.checktokenImpData();
   }
 
-  public async redirectTo() {
-    if (!await this._auth.checktokenImp())
-      return '/login';
-    let datatoken = await this.checktokenData();//get los dtoslos datos del token devuelto 
-    switch (datatoken.data.inicial) {
-      case 'A':
-        return '/admin';
-      case 'C':
-        return '/dashboarss';
-      // default:
-      //   this._router.navigate(['/dashboard']);
-      //   break;
-    }
-  }
-
-  // public closeNav() {
-  //   this.appDrawer.close();
-  // }
-
-  // public openNav() {
-  //   this.appDrawer.open();
-  // }
-}
-
-
-
-
-/****************REDIRECT EMPTY PATH SERVICE path:'' ************************************/
-
-@Injectable()
-export class RedirectToService {
-  
-  constructor(private _auth: AuthenticationService) {         }
-
-  public async checktokenData() {
-    return await this._auth.checktokenImpData();
-  }
-
-  public async redirectTo() {
-    if (!await this._auth.checktokenImp())
-      return '/login';
-    let datatoken = await this.checktokenData();//get los dtoslos datos del token devuelto 
-    switch (datatoken.data.inicial) {
-      case 'A':
-        return '/admin';
-      case 'C':
-        return '/dashboard';
-      // default:
-      //   this._router.navigate(['/dashboard']);
-      //   break;
-    }
-  }
-}//end class redirectto class
+}//end class nav services

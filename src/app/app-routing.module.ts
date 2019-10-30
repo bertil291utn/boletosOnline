@@ -7,7 +7,8 @@ import { RegistroComponent } from './registro/registro.component';
 import { AuthGuard } from './services/auth.guard';
 import { AuthadminGuard, AuthCoopGuard } from './services/authadmin.guard';
 import { ConductorComponent } from './conductor/conductor.component';
-import { RedirectToService } from './services/nav.service';
+import { CondInactivosComponent } from './cond-inactivos/cond-inactivos.component';
+import { BusComponent } from './bus/bus.component';
 
 
 const routes: Routes = [
@@ -26,6 +27,8 @@ const routes: Routes = [
           { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
           { path: 'dashboard', component: CooperativaComponent },
           { path: 'conductor', component: ConductorComponent },
+          { path: 'condinactivo', component: CondInactivosComponent },
+          { path: 'bus', component: BusComponent },
         ]
       },
 

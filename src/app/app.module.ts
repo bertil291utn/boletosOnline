@@ -19,13 +19,15 @@ import * as  Cloudinary from 'cloudinary-core';
 import { AuthenticationService } from './services/authentication.service';
 import { AuthGuard } from './services/auth.guard';
 import { TokenInterceptorService } from './services/token-interceptor.service';
-import { ApirestService, ApirestConductoresService, ApirestEmpresasService } from './services/apirest.service';
+import { ApirestService, ApirestConductoresService, ApirestEmpresasService, ApirestBusesService } from './services/apirest.service';
 import { AuthadminGuard, AuthCoopGuard } from './services/authadmin.guard';
 import { MenuListItemComponent } from './menu-list-item/menu-list-item.component';
-import { NavService, RedirectToService } from './services/nav.service';
+import { NavService } from './services/nav.service';
 import { CdkColumnDef } from '@angular/cdk/table';
 import { ConductorComponent, DialogDeleteDriver } from './conductor/conductor.component';
 import { environment } from 'src/environments/environment';
+import { CondInactivosComponent, DialogInactiveDriver } from './cond-inactivos/cond-inactivos.component';
+import { BusComponent } from './bus/bus.component';
 
 
 @NgModule({
@@ -39,7 +41,11 @@ import { environment } from 'src/environments/environment';
     DialogOverviewExampleDialog,
     DialogDeleteUser,
     ConductorComponent,
-    DialogDeleteDriver
+    DialogDeleteDriver,
+    CondInactivosComponent,
+    DialogInactiveDriver,
+    BusComponent
+    
   ],
   imports: [
     BrowserModule,
@@ -52,13 +58,14 @@ import { environment } from 'src/environments/environment';
     HttpClientModule
   ],
   providers: [AuthenticationService, AuthGuard, ApirestService, AuthadminGuard, NavService, CdkColumnDef,
-    ApirestConductoresService, ApirestEmpresasService,AuthCoopGuard,RedirectToService
+    ApirestConductoresService, ApirestEmpresasService,AuthCoopGuard,ApirestBusesService
   ],
   bootstrap: [AppComponent],
   entryComponents: [
     DialogOverviewExampleDialog,
     DialogDeleteUser,
-    DialogDeleteDriver
+    DialogDeleteDriver,
+    DialogInactiveDriver
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

@@ -1,0 +1,56 @@
+<h3>Conductores inactivos</h3>
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8 ">
+
+    <ng-container matColumnDef="numeracion">
+        <th mat-header-cell *matHeaderCellDef>No.</th>
+        <td mat-cell *matCellDef="let element; let j = index"> {{j+1}} </td>
+    </ng-container>
+
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="cedula">
+        <th cell-centered mat-header-cell *matHeaderCellDef>C&eacute;dula</th>
+        <td cell-centered mat-cell *matCellDef="let element"> {{element.CEDULA_COND}} </td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="nombres">
+        <th cell-centered mat-header-cell *matHeaderCellDef>Nombres</th>
+        <td cell-centered mat-cell *matCellDef="let element"> {{element.NOMBRE_COND}} </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="apellidos">
+        <th cell-centered mat-header-cell *matHeaderCellDef>Apellidos</th>
+        <td cell-centered mat-cell *matCellDef="let element"> {{element.APELLIDO_COND}} </td>
+    </ng-container>
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="email">
+        <th cell-centered mat-header-cell *matHeaderCellDef>Email</th>
+        <td cell-centered mat-cell *matCellDef="let element"> {{element.CORREO_COND}} </td>
+    </ng-container>
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="direccion">
+        <th mat-header-cell *matHeaderCellDef>Direcci&oacute;n</th>
+        <td mat-cell *matCellDef="let element"> {{element.DIRECCION_COND}} </td>
+    </ng-container>
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="telefono">
+        <th cell-centered mat-header-cell *matHeaderCellDef>Tel&eacute;fono</th>
+        <td cell-centered mat-cell *matCellDef="let element"> {{element.TELEFONO_COND}} </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="opciones" sticky>
+        <th cell-centered mat-header-cell *matHeaderCellDef>Opciones</th>
+        <td cell-centered mat-cell *matCellDef="let element">
+            <button mat-icon-button (click)="activarElem(element)">
+                <mat-icon>check</mat-icon>
+            </button>
+
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

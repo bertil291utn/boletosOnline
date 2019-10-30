@@ -69,16 +69,18 @@
   <br>
 
   <span style="padding: 10px; float:right;">
+    <button mat-stroked-button color="primary" (click)="VerInactivos()">
+      <mat-icon>delete</mat-icon>
+    </button>
     <button mat-stroked-button (click)="!registroisactive?registroisactive=true:registroisactive=false "
       color="primary">
       <mat-icon>{{registroisactive?'arrow_drop_up':'arrow_drop_down' }}</mat-icon>
     </button>
-    <span></span>
     <button mat-stroked-button color="primary" (click)="refreshTable()">
       <mat-icon>refresh</mat-icon>
     </button>
   </span>
-
+  <h3>Listado de conductores</h3>
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 ">
 
     <ng-container matColumnDef="numeracion">

@@ -17,3 +17,10 @@ export interface Drivers {
     direccion: string;
     telefono: string;
 }
+
+export interface Buses {
+    numero_bus: string;
+    id_cond: string;
+    asientos_bus: number;
+    dos_pisos: string;
+}

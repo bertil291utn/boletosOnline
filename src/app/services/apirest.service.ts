@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, Observer } from 'rxjs';
 import 'rxjs/add/operator/map';
 
-import { Drivers, Usuarios } from '../interfaces/ObjetosInterface';
+import { Drivers, Usuarios, Buses } from '../interfaces/ObjetosInterface';
 import { environment } from 'src/environments/environment';
 
 // const urlCoopMain = 'http://localhost/wsboleto/';
@@ -114,7 +114,6 @@ export class ApirestConductoresService {
       "id_cond": id_cond
     };
     return this.http.put(urlCoopMain + 'conductores/delete', usuarioObject, { responseType: 'json' });
-
   }
 
 
@@ -135,6 +134,100 @@ export class ApirestConductoresService {
   }*/
   }
 
+  getDriverById(id) {
+    return this.http.get(urlCoopMain + `conductores/${id}`);
+  }
+
+  public updateDriver(driver) {
+    let data = new FormData();
+    if (driver.foto != null) {
+      data.append('file', driver.foto);
+      data.append('public_id', `driver/${driver.cedula}`);
+    }
+    data.append('ID_COND', driver.id_cond);
+    data.append('CORREO_COND', driver.email);
+    data.append('DIRECCION_COND', driver.direccion);
+    data.append('TELEFONO_COND', driver.telefono);
+    data.append('ESTADO_COND', driver.estado);
+    return this.http.post(urlCoopMain + 'conductores/update', data, { responseType: 'json' });
+  }
+
+
+  public registerDriver(driver) {
+    let data = new FormData();
+    if (driver.foto != null) {
+      data.append('file', driver.foto);
+      data.append('public_id', `driver/${driver.cedula}`);
+    }
+
+    data.append('ID_EMPRESA', driver.id_empresa);
+    data.append('CEDULA_COND', driver.cedula);
+    data.append('NOMBRE_COND', driver.nombres);
+    data.append('APELLIDO_COND', driver.apellidos);
+    data.append('CORREO_COND', driver.email);
+    data.append('DIRECCION_COND', driver.direccion);
+    data.append('TELEFONO_COND', driver.telefono);
+    data.append('ESTADO_COND', driver.estado);
+    return this.http.post(urlCoopMain + 'conductores', data, { responseType: 'json' });
+  }
+
+  public getInactiveDrivers(): Observable<Drivers[]> {
+    return this.http.get<Drivers[]>(urlCoopMain + 'conductores/inactivos');
+  }
+
+  public updateDriverToActive(id_cond) {
+    let usuarioObject =
+    {
+      "id_cond": id_cond
+    };
+    return this.http.put(urlCoopMain + 'conductores/update_inactivos', usuarioObject, { responseType: 'json' });
+
+  }
+
+
+}//end class condcutores
+
+
+
+/****************************apirest para empresas cooperativas********************************************/
+@Injectable({
+  providedIn: 'root'
+})
+export class ApirestEmpresasService {
+
+  constructor(private http: HttpClient) { }
+
+  public getallEmpresas() {
+    return this.http.get(urlCoopMain + 'empresas');
+  }
+
+
+
+}//end class empresas
+
+
+/*****************API REST PARA BUSES***********************************/
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ApirestBusesService {
+
+  constructor(private http: HttpClient) { }
+
+  public deleteDriver(id_cond) {
+    let usuarioObject =
+    {
+      "id_cond": id_cond
+    };
+    return this.http.put(urlCoopMain + 'conductores/delete', usuarioObject, { responseType: 'json' });
+  }
+
+
+  public getallBuses(): Observable<Buses[]> {
+    return this.http.get<Buses[]>(urlCoopMain + 'bus/all');
+  }
+
   getUserByUserName(username) {
     return this.http.get(urlCoopMain + `username=id${username}`);
   }
@@ -151,39 +244,32 @@ export class ApirestConductoresService {
     return this.http.post(urlCoopMain + 'conductores/update', data, { responseType: 'json' });
   }
 
-  
-  public registerDriver(driver) {
-    let data = new FormData();
-    data.append('file', driver.foto);
-    data.append('public_id', `driver/${driver.cedula}`);
-    data.append('ID_EMPRESA', driver.id_empresa);
-    data.append('CEDULA_COND', driver.cedula);
-    data.append('NOMBRE_COND', driver.nombres);
-    data.append('APELLIDO_COND', driver.apellidos);
-    data.append('CORREO_COND', driver.email);
-    data.append('DIRECCION_COND', driver.direccion);
-    data.append('TELEFONO_COND', driver.telefono);
-    data.append('ESTADO_COND', driver.estado);
-    return this.http.post(urlCoopMain + 'conductores', data, { responseType: 'json' });
+
+  public registerBuses(bus) {
+    let data = {
+      "id_empresa": bus.id_empresa,
+      "id_cond": bus.id_cond,
+      "numero_bus": bus.numero_bus,
+      "asientos_bus": bus.asientos_bus,
+      "estado_bus": bus.estado_bus,
+      "asientos_dis_bus": bus.asientos_bus,
+      "dos_pisos_bus": bus.dos_pisos_bus
+    }
+    return this.http.post(urlCoopMain + 'bus/save', data, { responseType: 'json' });
+  }
+
+  public getInactiveDrivers(): Observable<Drivers[]> {
+    return this.http.get<Drivers[]>(urlCoopMain + 'conductores/inactivos');
+  }
+
+  public updateDriverToActive(id_cond) {
+    let usuarioObject =
+    {
+      "id_cond": id_cond
+    };
+    return this.http.put(urlCoopMain + 'conductores/update_inactivos', usuarioObject, { responseType: 'json' });
+
   }
 
 
-}//end class condcutores
-
-
-
-/****************************apirst para empresas cooperativas********************************************/
-@Injectable({
-  providedIn: 'root'
-})
-export class ApirestEmpresasService {
-
-  constructor(private http: HttpClient) { }
-
-  public getallEmpresas() {
-    return this.http.get(urlCoopMain + 'empresa/all');
-  }
-
-
-
-}//end class empresas
+}//end class buses

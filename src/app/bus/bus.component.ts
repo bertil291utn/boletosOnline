@@ -35,6 +35,7 @@ export class BusComponent implements OnInit {
 
   private initFormulario() {
     this.registerForm = new FormGroup({
+      id_bus: new FormControl(''),
       id_empresa: new FormControl('', Validators.required),
       id_cond: new FormControl('', Validators.required),
       numero_bus: new FormControl('', Validators.required),
@@ -49,14 +50,14 @@ export class BusComponent implements OnInit {
   }
 
 
-  openDialog(driver): void {
-    console.log('user van asi ', driver);
+  openDialog(bus): void {
+    console.log('user van asi ', bus);
     let componente;
-    componente = DialogDeleteDriver;
+    componente = DialogDeleteBus;
 
     const dialogRef = this.dialog.open(componente, {
       width: '300px',
-      data: { id_cond: driver.ID_COND, nombre: driver.NOMBRE_COND, apellido: driver.APELLIDO_COND, cedula: driver.CEDULA_COND }
+      data: { id_bus: bus.ID_BUS, numero: bus.NUMERO_BUS, conductor: bus.NOMBRE_COND + ' ' + bus.APELLIDO_COND }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -71,6 +72,7 @@ export class BusComponent implements OnInit {
   public editRetrieveData(elemento) {
     // this.registerForm.controls['value'].setValue(this.value);
     if (elemento !== null || undefined) {
+      this.registerForm.controls['id_bus'].setValue(elemento.ID_BUS);
       this.registerForm.controls['id_empresa'].setValue(elemento.ID_EMPRESA);
       this.registerForm.controls['id_cond'].setValue(elemento.ID_COND);
       this.registerForm.controls['numero_bus'].setValue(elemento.NUMERO_BUS);
@@ -143,16 +145,16 @@ export class BusComponent implements OnInit {
         err => { console.log(err); this.registerForm.reset(); }
       );
     }
-    // else {
-    //   console.log('form when edit: ', this.registerForm.value);
+    else {
+      console.log('form when edit: ', this.registerForm.value);
 
-    //   this._apirest.updateDriver(this.registerForm.value).subscribe(resp => {
-    //     if (resp['status'] == 200) {
-    //       this.registerForm.reset();
-    //       this.refreshTable();
-    //     }
-    //   });
-    // }
+      this._apirest.updateBus(this.registerForm.value).subscribe(resp => {
+        if (resp['status'] == 200) {
+          this.registerForm.reset();
+          this.refreshTable();
+        }
+      });
+    }
   }//ed register bus
 
   public refreshTable() {
@@ -163,7 +165,7 @@ export class BusComponent implements OnInit {
 
 
   public VerInactivos() {
-    this._router.navigate(['condinactivo']);
+    this._router.navigate(['businactivo']);
   }
 
 }//end conductor component class 
@@ -194,31 +196,30 @@ export class UserDataSource extends DataSource<any> {
 /***********componente para eliminar *********************************************/
 
 @Component({
-  selector: 'dialog-delete-user',
+  selector: 'dialog-delete-bus',
   template: `
   <div mat-dialog-content>
-  <p>Esta seguro de eliminar este conductor <br>
-  <strong>C&eacute;dula: </strong>{{data.cedula}} <br>
-  <strong>Nombres: </strong>{{data.nombre}} <br>
-  <strong>Apellidos: </strong>{{data.apellido}}</p>
+  <p>Esta seguro de eliminar este bus <br>
+  <strong>N&uacute;mero bus: </strong>{{data.numero}} <br>
+  <strong>Conductor: </strong>{{data.conductor}} <br>
   </div>
   <div mat-dialog-actions>
-    <button mat-button (click)="deleteDriver()">Aceptar</button>
+    <button mat-button (click)="deleteBus()">Aceptar</button>
     <button mat-button (click)="onNoClick()">Cancelar</button>
   </div>
   `
 })
-export class DialogDeleteDriver {
+export class DialogDeleteBus {
   constructor(
-    public dialogRef: MatDialogRef<DialogDeleteDriver>,
-    @Inject(MAT_DIALOG_DATA) public data, private _apirest: ApirestConductoresService) { }
+    public dialogRef: MatDialogRef<DialogDeleteBus>,
+    @Inject(MAT_DIALOG_DATA) public data, private _apirest: ApirestBusesService) { }
 
   onNoClick(): void {
     this.dialogRef.close();
   }
 
-  deleteDriver() {
-    this._apirest.deleteDriver(this.data.id_cond).subscribe(resp => {
+  deleteBus() {
+    this._apirest.deleteBus(this.data.id_bus).subscribe(resp => {
       if (resp['status'] == 200)
         this.dialogRef.close({ value: true });//if response is correct then refresh table 
     },

@@ -215,12 +215,12 @@ export class ApirestBusesService {
 
   constructor(private http: HttpClient) { }
 
-  public deleteDriver(id_cond) {
+  public deleteBus(id_bus) {
     let usuarioObject =
     {
-      "id_cond": id_cond
+      "id_bus": id_bus
     };
-    return this.http.put(urlCoopMain + 'conductores/delete', usuarioObject, { responseType: 'json' });
+    return this.http.put(urlCoopMain + 'bus/delete', usuarioObject, { responseType: 'json' });
   }
 
 
@@ -232,16 +232,16 @@ export class ApirestBusesService {
     return this.http.get(urlCoopMain + `username=id${username}`);
   }
 
-  public updateDriver(driver) {
-    let data = new FormData();
-    data.append('file', driver.foto);
-    data.append('public_id', `driver/${driver.cedula}`);
-    data.append('ID_COND', driver.id_cond);
-    data.append('CORREO_COND', driver.email);
-    data.append('DIRECCION_COND', driver.direccion);
-    data.append('TELEFONO_COND', driver.telefono);
-    data.append('ESTADO_COND', driver.estado);
-    return this.http.post(urlCoopMain + 'conductores/update', data, { responseType: 'json' });
+  public updateBus(bus) {
+    let data = {
+      "id_bus": bus.id_bus,
+      "id_cond": bus.id_cond,
+      "numero_bus": bus.numero_bus,
+      "asientos_bus": bus.asientos_bus,
+      "estado_bus": bus.estado_bus,
+      "dos_pisos_bus": bus.dos_pisos_bus
+    };
+    return this.http.put(urlCoopMain + 'bus/update', data, { responseType: 'json' });
   }
 
 
@@ -258,16 +258,16 @@ export class ApirestBusesService {
     return this.http.post(urlCoopMain + 'bus/save', data, { responseType: 'json' });
   }
 
-  public getInactiveDrivers(): Observable<Drivers[]> {
-    return this.http.get<Drivers[]>(urlCoopMain + 'conductores/inactivos');
+  public getInactiveBuses(): Observable<Buses[]> {
+    return this.http.get<Buses[]>(urlCoopMain + 'bus/inactivos');
   }
 
-  public updateDriverToActive(id_cond) {
+  public updateBusToActive(id_bus) {
     let usuarioObject =
     {
-      "id_cond": id_cond
+      "id_bus": id_bus
     };
-    return this.http.put(urlCoopMain + 'conductores/update_inactivos', usuarioObject, { responseType: 'json' });
+    return this.http.put(urlCoopMain + 'bus/update_inactivos', usuarioObject, { responseType: 'json' });
 
   }
 

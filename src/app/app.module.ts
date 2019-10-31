@@ -27,7 +27,8 @@ import { CdkColumnDef } from '@angular/cdk/table';
 import { ConductorComponent, DialogDeleteDriver } from './conductor/conductor.component';
 import { environment } from 'src/environments/environment';
 import { CondInactivosComponent, DialogInactiveDriver } from './cond-inactivos/cond-inactivos.component';
-import { BusComponent } from './bus/bus.component';
+import { BusComponent, DialogDeleteBus } from './bus/bus.component';
+import { BusInactivosComponent, DialogInactiveBus } from './bus-inactivos/bus-inactivos.component';
 
 
 @NgModule({
@@ -44,7 +45,10 @@ import { BusComponent } from './bus/bus.component';
     DialogDeleteDriver,
     CondInactivosComponent,
     DialogInactiveDriver,
-    BusComponent
+    BusComponent,
+    DialogDeleteBus,
+    BusInactivosComponent,
+    DialogInactiveBus
     
   ],
   imports: [
@@ -65,7 +69,9 @@ import { BusComponent } from './bus/bus.component';
     DialogOverviewExampleDialog,
     DialogDeleteUser,
     DialogDeleteDriver,
-    DialogInactiveDriver
+    DialogInactiveDriver,
+    DialogDeleteBus,
+    DialogInactiveBus
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

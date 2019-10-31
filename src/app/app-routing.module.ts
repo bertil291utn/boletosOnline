@@ -9,6 +9,7 @@ import { AuthadminGuard, AuthCoopGuard } from './services/authadmin.guard';
 import { ConductorComponent } from './conductor/conductor.component';
 import { CondInactivosComponent } from './cond-inactivos/cond-inactivos.component';
 import { BusComponent } from './bus/bus.component';
+import { BusInactivosComponent } from './bus-inactivos/bus-inactivos.component';
 
 
 const routes: Routes = [
@@ -29,6 +30,7 @@ const routes: Routes = [
           { path: 'conductor', component: ConductorComponent },
           { path: 'condinactivo', component: CondInactivosComponent },
           { path: 'bus', component: BusComponent },
+          { path: 'businactivo', component: BusInactivosComponent },
         ]
       },
 

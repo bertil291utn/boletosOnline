@@ -5,9 +5,10 @@ import 'rxjs/add/operator/map';
 
 import { Drivers, Usuarios, Buses } from '../interfaces/ObjetosInterface';
 import { environment } from 'src/environments/environment';
+import { Driver } from 'selenium-webdriver/chrome';
 
-// const urlCoopMain = 'http://localhost/wsboleto/';
-const urlCoopMain = 'https://wsappflota.herokuapp.com/';
+const urlCoopMain = 'http://localhost/wsboleto/';
+// const urlCoopMain = 'https://wsappflota.herokuapp.com/';
 
 @Injectable({
   providedIn: 'root'
@@ -118,6 +119,7 @@ export class ApirestConductoresService {
 
 
   public getallDrivers(): Observable<Drivers[]> {
+
     return this.http.get<Drivers[]>(urlCoopMain + 'conductores');
 
     /*getData(): Observable<any> {
@@ -138,11 +140,14 @@ export class ApirestConductoresService {
     return this.http.get(urlCoopMain + `conductores/${id}`);
   }
 
+  getNullDriverId() {
+    return this.http.get(urlCoopMain + `conductores/nulldriver`);
+  }
+
   public updateDriver(driver) {
     let data = new FormData();
     if (driver.foto != null) {
-      data.append('file', driver.foto);
-      data.append('public_id', `driver/${driver.cedula}`);
+      data.append('FILE', driver.foto);
     }
     data.append('ID_COND', driver.id_cond);
     data.append('CORREO_COND', driver.email);
@@ -156,8 +161,7 @@ export class ApirestConductoresService {
   public registerDriver(driver) {
     let data = new FormData();
     if (driver.foto != null) {
-      data.append('file', driver.foto);
-      data.append('public_id', `driver/${driver.cedula}`);
+      data.append('FILE', driver.foto);
     }
 
     data.append('ID_EMPRESA', driver.id_empresa);
@@ -216,16 +220,15 @@ export class ApirestBusesService {
   constructor(private http: HttpClient) { }
 
   public deleteBus(id_bus) {
-    let usuarioObject =
-    {
-      "id_bus": id_bus
-    };
-    return this.http.put(urlCoopMain + 'bus/delete', usuarioObject, { responseType: 'json' });
+    let usuarioObject = new FormData();
+    usuarioObject.append('ID_BUS', id_bus);
+    usuarioObject.append('ESTADO_BUS', '0');
+    return this.http.post(urlCoopMain + 'buses/setEstado', usuarioObject, { responseType: 'json' });
   }
 
 
   public getallBuses(): Observable<Buses[]> {
-    return this.http.get<Buses[]>(urlCoopMain + 'bus/all');
+    return this.http.get<Buses[]>(urlCoopMain + 'buses');
   }
 
   getUserByUserName(username) {
@@ -233,41 +236,39 @@ export class ApirestBusesService {
   }
 
   public updateBus(bus) {
-    let data = {
-      "id_bus": bus.id_bus,
-      "id_cond": bus.id_cond,
-      "numero_bus": bus.numero_bus,
-      "asientos_bus": bus.asientos_bus,
-      "estado_bus": bus.estado_bus,
-      "dos_pisos_bus": bus.dos_pisos_bus
-    };
-    return this.http.put(urlCoopMain + 'bus/update', data, { responseType: 'json' });
+
+    let data = new FormData();
+    data.append('ID_BUS', bus.id_bus);
+    data.append('ID_COND', bus.id_cond);
+    data.append('NUMERO_BUS', bus.numero_bus);
+    data.append('ASIENTOS_BUS', bus.asientos_bus);
+    data.append('DOS_PISOS_BUS', bus.dos_pisos_bus);
+
+    return this.http.post(urlCoopMain + 'buses/update', data, { responseType: 'json' });
   }
 
 
   public registerBuses(bus) {
-    let data = {
-      "id_empresa": bus.id_empresa,
-      "id_cond": bus.id_cond,
-      "numero_bus": bus.numero_bus,
-      "asientos_bus": bus.asientos_bus,
-      "estado_bus": bus.estado_bus,
-      "asientos_dis_bus": bus.asientos_bus,
-      "dos_pisos_bus": bus.dos_pisos_bus
-    }
-    return this.http.post(urlCoopMain + 'bus/save', data, { responseType: 'json' });
+    let data = new FormData();
+    data.append('ID_COND', bus.id_cond);
+    data.append('NUMERO_BUS', bus.numero_bus);
+    data.append('ASIENTOS_BUS', bus.asientos_bus);
+    data.append('DOS_PISOS_BUS', bus.dos_pisos_bus);
+
+    return this.http.post(urlCoopMain + 'buses', data, { responseType: 'json' });
   }
 
   public getInactiveBuses(): Observable<Buses[]> {
-    return this.http.get<Buses[]>(urlCoopMain + 'bus/inactivos');
+    return this.http.get<Buses[]>(urlCoopMain + 'buses/inactivos');
   }
 
   public updateBusToActive(id_bus) {
-    let usuarioObject =
-    {
-      "id_bus": id_bus
-    };
-    return this.http.put(urlCoopMain + 'bus/update_inactivos', usuarioObject, { responseType: 'json' });
+
+    let usuarioObject = new FormData();
+    usuarioObject.append('ID_BUS', id_bus);
+    usuarioObject.append('ESTADO_BUS', '1');
+
+    return this.http.post(urlCoopMain + 'buses/setEstado', usuarioObject, { responseType: 'json' });
 
   }
 

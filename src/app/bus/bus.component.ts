@@ -29,23 +29,23 @@ export class BusComponent implements OnInit {
   ngOnInit() {
     this.initFormulario();
     this.getAllEmpresas();
-    this.getAllDricers();
+    this.getAllDrivers();
 
   }
 
   private initFormulario() {
     this.registerForm = new FormGroup({
       id_bus: new FormControl(''),
-      id_empresa: new FormControl('', Validators.required),
+      // id_empresa: new FormControl('', Validators.required),
       id_cond: new FormControl('', Validators.required),
       numero_bus: new FormControl('', Validators.required),
       asientos_bus: new FormControl('', Validators.required),
-      estado_bus: new FormControl('', Validators.required),
+      estado_bus: new FormControl(''),
       dos_pisos_bus: new FormControl('')
     });
   }
 
-  public async getAllDricers() {
+  public async getAllDrivers() {
     this.conductores = await this._apirestCond.getallDrivers().toPromise();
   }
 
@@ -73,8 +73,8 @@ export class BusComponent implements OnInit {
     // this.registerForm.controls['value'].setValue(this.value);
     if (elemento !== null || undefined) {
       this.registerForm.controls['id_bus'].setValue(elemento.ID_BUS);
-      this.registerForm.controls['id_empresa'].setValue(elemento.ID_EMPRESA);
-      this.registerForm.controls['id_cond'].setValue(elemento.ID_COND);
+      // this.registerForm.controls['id_empresa'].setValue(elemento.ID_EMPRESA);
+      this.registerForm.controls['id_cond'].setValue(+elemento.ID_COND);
       this.registerForm.controls['numero_bus'].setValue(elemento.NUMERO_BUS);
       this.registerForm.controls['asientos_bus'].setValue(elemento.ASIENTOS_BUS);
       this.registerForm.controls['estado_bus'].setValue(elemento.ESTADO_BUS);
@@ -122,6 +122,7 @@ export class BusComponent implements OnInit {
   //trer todas las cooperativas
   public async getAllEmpresas() {
     this.empresas = await this._apirestEmpresa.getallEmpresas().toPromise();
+    this.empresas = this.empresas[0];
     console.log('this.empresas : ', this.empresas);
   }
 

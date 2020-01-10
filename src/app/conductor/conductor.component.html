@@ -1,8 +1,8 @@
 <div>
 
   <mat-card *ngIf="registroisactive">
-    <img
-      [src]="previewFoto!=null&&previewFoto!=''?previewFoto:'https://www.voanews.com/themes/custom/voa/images/Author__Placeholder.png'"
+    <img [ngStyle]="previewFoto==null||previewFoto==''?{'width': '8%','margin': '2%'} : null"
+      [src]="previewFoto!=null&&previewFoto!=''?previewFoto:'https://res.cloudinary.com/hdpoyu0ip/image/upload/v1578680169/appboleto_adicional/null_profile.png'"
       id="previewfoto">
     <!-- *ngIf="previewFoto!=null||previewFoto!=undefined" -->
     <mat-card-title>{{editButton?'Editar':'Registrar'}} conductor</mat-card-title>
@@ -43,13 +43,13 @@
           <input matInput placeholder="Tel&eacute;fono" type="telefono" formControlName="telefono">
         </mat-form-field>
 
-        <mat-form-field class="m-r-8">
+        <!-- <mat-form-field class="m-r-8">
           <mat-label>Estado</mat-label>
           <mat-select required formControlName="estado" required>
             <mat-option value="1">Activo </mat-option>
             <mat-option value="0">Inactivo </mat-option>
           </mat-select>
-        </mat-form-field>
+        </mat-form-field> -->
 
         <button type="button" mat-stroked-button (click)="fileInput.click()">Subir fotograf&iacute;a</button>
         <input hidden (change)="onFileSelected($event)" #fileInput type="file">

@@ -5,7 +5,7 @@
         <mat-card-title>{{editButton?'Editar':'Registrar'}} bus</mat-card-title>
         <mat-card-content>
             <form [formGroup]="registerForm">
-                <span *ngIf="!editButton">
+                <!-- <span *ngIf="!editButton">
 
                     <mat-form-field class="m-r-8">
                         <mat-label>Empresa</mat-label>
@@ -15,11 +15,11 @@
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
-                </span>
+                </span> -->
                 <mat-form-field class="m-r-8">
                     <mat-label>Conductor</mat-label>
                     <mat-select required formControlName="id_cond" required>
-                        <mat-option [value]="c.ID_COND" *ngFor="let c of conductores">
+                        <mat-option [value]="+c.ID_COND" *ngFor="let c of conductores">
                             {{c.NOMBRE_COND|titlecase}} {{c.APELLIDO_COND|titlecase}}
                         </mat-option>
                     </mat-select>
@@ -41,13 +41,13 @@
                     </mat-select>
                 </mat-form-field>
 
-                <mat-form-field class="m-r-8">
+                <!-- <mat-form-field class="m-r-8">
                     <mat-label>Estado</mat-label>
                     <mat-select required formControlName="estado_bus" required>
                         <mat-option value="1">Activo </mat-option>
                         <mat-option value="0">Inactivo </mat-option>
                     </mat-select>
-                </mat-form-field>
+                </mat-form-field> -->
 
 
 

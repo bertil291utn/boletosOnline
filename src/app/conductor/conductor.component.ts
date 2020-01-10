@@ -2,10 +2,11 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { DataSource } from '@angular/cdk/table';
 import { ApirestConductoresService, ApirestEmpresasService, ApirestService } from '../services/apirest.service';
 import { Drivers } from '../interfaces/ObjetosInterface';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-conductor',
@@ -36,7 +37,7 @@ export class ConductorComponent implements OnInit {
   private initFormulario() {
     this.registerForm = new FormGroup({
       id_cond: new FormControl(''),
-      id_empresa: new FormControl('', Validators.required),
+      // id_empresa: new FormControl('', Validators.required),
       cedula: new FormControl('', Validators.required),
       nombres: new FormControl('', Validators.required),
       apellidos: new FormControl('', Validators.required),
@@ -44,7 +45,7 @@ export class ConductorComponent implements OnInit {
       email: new FormControl('', Validators.email),
       direccion: new FormControl('', Validators.required),
       telefono: new FormControl(''),
-      estado: new FormControl('', Validators.required),
+      estado: new FormControl('1'),
     });
   }
 
@@ -68,11 +69,11 @@ export class ConductorComponent implements OnInit {
   }
 
 
-  public editRetrieveData(elemento) {
+  public async editRetrieveData(elemento) {
     // this.registerForm.controls['value'].setValue(this.value);
     if (elemento !== null || undefined) {
       this.registerForm.controls['id_cond'].setValue(elemento.ID_COND);
-      this.registerForm.controls['id_empresa'].setValue(elemento.ID_EMPRESA);
+      // this.registerForm.controls['id_empresa'].setValue(elemento.ID_EMPRESA);
       this.registerForm.controls['cedula'].setValue(elemento.CEDULA_COND);
       this.registerForm.controls['nombres'].setValue(elemento.NOMBRE_COND);
       this.registerForm.controls['apellidos'].setValue(elemento.APELLIDO_COND);
@@ -82,8 +83,12 @@ export class ConductorComponent implements OnInit {
       this.registerForm.controls['telefono'].setValue(elemento.TELEFONO_COND);
       this.registerForm.controls['estado'].setValue(elemento.ESTADO_COND);
       // this.previewFoto = this.registerForm.get('foto').value;
-      this.previewFoto = elemento.FOTO_COND;
-      console.log('retireve from form: ', this.registerForm.value);
+      let nulldriveridimg = await this._apirest.getNullDriverId().toPromise();//null driver id 16
+      nulldriveridimg = nulldriveridimg['nulldriverid'];
+      this.previewFoto = elemento.ID_IMG == nulldriveridimg ? null : elemento.FOTO_COND;//si el id_img es 16 poner null par disciminr de una foto nula y otra no nula para poner el estilo ngStyle en la vista
+      console.log('null driver id img ', nulldriveridimg);
+      console.log('previrefoto ', this.previewFoto);
+     
     }
   }
 
@@ -91,6 +96,7 @@ export class ConductorComponent implements OnInit {
     if (this.editButton) {//si esta activo se va a editar caso contrario se va a add un condcutor 
       this.registerForm.reset();//reset valores
       this.previewFoto = null;
+      console.log('previrefoto ', this.previewFoto);
       this.editButton = false
     } else {
       this.registerForm.reset();//reset valores
@@ -122,12 +128,14 @@ export class ConductorComponent implements OnInit {
     this.fotoFile = event.target.files[0];
     this.registerForm.controls['foto'].setValue(this.fotoFile);//asigna a la variable fotografia del formualrio el valor de a fotografia
     this.previewFoto = await this.toBase64(this.fotoFile);//muestra un preview  ela imgen que se va a subir
+    console.log('previrefoto ', this.previewFoto);
     console.log('file: ', this.fotoFile);
   }
 
   //trer todas las cooperativas
   public async getAllEmpresas() {
     this.empresas = await this._apirestEmpresa.getallEmpresas().toPromise();
+    this.empresas = this.empresas[0];
     console.log('this.empresas : ', this.empresas);
   }
 
@@ -148,6 +156,7 @@ export class ConductorComponent implements OnInit {
             this.refreshTable();
             this.fotoFile = null;
             this.previewFoto = null;
+            console.log('previrefoto ', this.previewFoto);
           }
         },
         err => { console.log(err); this.registerForm.reset(); }
@@ -161,6 +170,7 @@ export class ConductorComponent implements OnInit {
           this.refreshTable();
           this.fotoFile = null;
           this.previewFoto = null;
+          console.log('previrefoto ', this.previewFoto);
         }
       });
     }
@@ -180,9 +190,6 @@ export class ConductorComponent implements OnInit {
 }//end conductor component class 
 
 
-
-
-
 //class userdatasoyrce
 export class UserDataSource extends DataSource<any> {
   handleError;
@@ -192,6 +199,8 @@ export class UserDataSource extends DataSource<any> {
   connect(): Observable<Drivers[]> {
     return this._apirest.getallDrivers();
   }
+
+
 
   disconnect() { }
 

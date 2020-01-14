@@ -4,6 +4,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { DataSource } from '@angular/cdk/table';
 import { Observable } from 'rxjs';
 import { Drivers } from '../interfaces/ObjetosInterface';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-cond-inactivos',
@@ -15,7 +16,7 @@ export class CondInactivosComponent implements OnInit {
   //para el encabezado de la tabla
   displayedColumns: string[] = ['numeracion', 'cedula', 'nombres', 'apellidos', 'email', 'direccion', 'telefono', 'opciones'];
 
-  constructor(private _apirest: ApirestConductoresService, public dialog: MatDialog) { }
+  constructor(private _apirest: ApirestConductoresService, public dialog: MatDialog,private _location: Location) { }
 
   ngOnInit() {
   }
@@ -45,6 +46,11 @@ export class CondInactivosComponent implements OnInit {
     this.dataSource = null;
     this.dataSource = new UserDataSource(this._apirest);
   }
+
+  public backClicked() {
+    this._location.back();
+  }
+
 
 }//end class
 

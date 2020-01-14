@@ -1,0 +1,15 @@
+.title-grid-padding {
+  padding: 2%;
+}
+
+.fx-spacer {
+  flex: 1 1 auto;
+}
+/* 
+.container-name div {
+    display: inline-block;
+	width: 500px;
+	min-height: 50px;
+	background-color: #eee;
+	height: auto;
+  } */

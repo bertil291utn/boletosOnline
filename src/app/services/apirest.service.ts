@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, Observer } from 'rxjs';
 import 'rxjs/add/operator/map';
 
-import { Drivers, Usuarios, Buses } from '../interfaces/ObjetosInterface';
+import { Drivers, Usuarios, Buses, Rutas } from '../interfaces/ObjetosInterface';
 import { environment } from 'src/environments/environment';
 import { Driver } from 'selenium-webdriver/chrome';
 
@@ -231,6 +231,11 @@ export class ApirestBusesService {
     return this.http.get<Buses[]>(urlCoopMain + 'buses');
   }
 
+
+  public getallBuses_() {
+    return this.http.get(urlCoopMain + 'buses');
+  }
+
   getUserByUserName(username) {
     return this.http.get(urlCoopMain + `username=id${username}`);
   }
@@ -274,3 +279,68 @@ export class ApirestBusesService {
 
 
 }//end class buses
+
+
+/*****************API REST PARA RUTAS***********************************/
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ApirestRutasService {
+
+  constructor(private http: HttpClient) { }
+
+
+  public get_asientos_reservados(id_ruta: number) {
+    let url = `boletos/ocupados/${id_ruta}`;
+    return this.http.get(urlCoopMain + url);
+  }
+
+
+  public getallRutas(): Observable<Rutas[]> {
+    return this.http.get<Rutas[]>(urlCoopMain + 'rutas');
+  }
+
+
+  public updateRuta(ruta) {
+
+    let data = {
+      "ID_RUTA": ruta.id_ruta,
+      "ID_BUS": ruta.id_bus,
+      "ID_CIUDAD_INICIO": ruta.id_ciudad_origen,
+      "ID_CIUDAD_DESTINO": ruta.id_ciudad_destino,
+      "ID_HORARIO": ruta.id_horario,
+      "COSTO_RUTA": ruta.costo
+    };
+    return this.http.post(urlCoopMain + 'rutas/update', data, { responseType: 'json' });
+  }
+
+
+  public registerRutas(ruta) {
+    let data = {
+      "ID_BUS": ruta.id_bus,
+      "ID_CIUDAD_INICIO": ruta.id_ciudad_origen,
+      "ID_CIUDAD_DESTINO": ruta.id_ciudad_destino,
+      "ID_HORARIO": ruta.id_horario,
+      "COSTO_RUTA": ruta.costo,
+      "TIEMPO_EST_RUTA": ruta.tiempo_est_ruta
+    };
+
+    return this.http.post(urlCoopMain + 'rutas', data, { responseType: 'json' });
+  }
+
+
+  //api rest adicionales para ingreso
+
+  public getallCiudades() {
+    return this.http.get(urlCoopMain + 'ciudades');
+  }
+
+  public getallHorarios() {
+    return this.http.get(urlCoopMain + 'horarios');
+  }
+
+}//end class rutas
+
+
+

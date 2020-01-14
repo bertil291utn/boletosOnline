@@ -29,6 +29,8 @@ import { environment } from 'src/environments/environment';
 import { CondInactivosComponent, DialogInactiveDriver } from './cond-inactivos/cond-inactivos.component';
 import { BusComponent, DialogDeleteBus } from './bus/bus.component';
 import { BusInactivosComponent, DialogInactiveBus } from './bus-inactivos/bus-inactivos.component';
+import { RutaComponent } from './ruta/ruta.component';
+import { VentaBolComponent } from './venta-bol/venta-bol.component';
 
 
 @NgModule({
@@ -48,7 +50,9 @@ import { BusInactivosComponent, DialogInactiveBus } from './bus-inactivos/bus-in
     BusComponent,
     DialogDeleteBus,
     BusInactivosComponent,
-    DialogInactiveBus
+    DialogInactiveBus,
+    RutaComponent,
+    VentaBolComponent
     
   ],
   imports: [

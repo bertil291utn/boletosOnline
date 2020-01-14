@@ -4,6 +4,7 @@ import { ApirestBusesService } from '../services/apirest.service';
 import { Buses } from '../interfaces/ObjetosInterface';
 import { Observable } from 'rxjs';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-bus-inactivos',
@@ -15,8 +16,8 @@ export class BusInactivosComponent implements OnInit {
   dataSource = new UserDataSource(this._apirest);
   //para el encabezado de la tabla
   displayedColumns: string[] = ['numeracion', 'numero_bus', 'id_cond', 'asientos_bus', 'dos_pisos', 'opciones'];
-  
-  constructor(private _apirest: ApirestBusesService,public dialog: MatDialog) { }
+
+  constructor(private _apirest: ApirestBusesService, public dialog: MatDialog, private _location: Location) { }
 
   ngOnInit() {
   }
@@ -44,6 +45,10 @@ export class BusInactivosComponent implements OnInit {
     console.log('refresh table');
     this.dataSource = null;
     this.dataSource = new UserDataSource(this._apirest);
+  }
+
+  public backClicked() {
+    this._location.back();
   }
 
 }//end bus inactivos componennt
@@ -92,15 +97,15 @@ export class DialogInactiveBus {
   }
 
   activarBus() {
-      this._apirest.updateBusToActive(this.data.id_bus).subscribe(resp => {
-        if (resp['status'] == 200)
-          this.dialogRef.close({ value: true });//if response is correct then refresh table 
-      },
-        err => {
-          console.log('err update', err);
-          this.dialogRef.close({ value: false });
-        }
-      );
+    this._apirest.updateBusToActive(this.data.id_bus).subscribe(resp => {
+      if (resp['status'] == 200)
+        this.dialogRef.close({ value: true });//if response is correct then refresh table 
+    },
+      err => {
+        console.log('err update', err);
+        this.dialogRef.close({ value: false });
+      }
+    );
     console.log('se activo el usuario: ', this.data.id_cond, ' ', this.data.cedula);
   }
 }//end dialog suer class

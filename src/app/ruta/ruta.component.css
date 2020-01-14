@@ -1,0 +1,11 @@
+table {
+    width: 100%;
+  }
+  
+  [cell-centered] {
+    text-align: center;
+  }
+  
+  .button-space {
+    margin: 1%;
+  }

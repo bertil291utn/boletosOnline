@@ -168,6 +168,7 @@ export class ConductorComponent implements OnInit {
         if (resp['status'] == 200) {
           this.registerForm.reset();
           this.refreshTable();
+          this.editButton = false
           this.fotoFile = null;
           this.previewFoto = null;
           console.log('previrefoto ', this.previewFoto);

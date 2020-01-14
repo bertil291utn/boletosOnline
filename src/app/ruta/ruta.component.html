@@ -1,0 +1,127 @@
+<div class="component-body">
+    <mat-card *ngIf="registroisactive">
+        <mar-card-title>{{editButton?'Editar':'Registrar'}} rutas</mar-card-title>
+        <mat-card-content>
+            <form [formGroup]="registerForm">
+
+
+                <mat-form-field class="m-r-8">
+                    <mat-label>Unidad No.</mat-label>
+                    <mat-select required formControlName="id_bus" required>
+                        <mat-option [value]="b.ID_BUS" *ngFor="let b of buses">
+                            {{b.NUMERO_BUS}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="m-r-8">
+                    <mat-label>Ciudad de origen</mat-label>
+                    <mat-select required formControlName="id_ciudad_origen" required>
+                        <mat-option [value]="c.ID_CIUDAD" *ngFor="let c of ciudades">
+                            {{c.NOMBRE_CIUDAD|titlecase}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="m-r-8">
+                    <mat-label>Ciudad de destino</mat-label>
+                    <mat-select required formControlName="id_ciudad_destino" required>
+                        <mat-option [value]="c.ID_CIUDAD" *ngFor="let c of ciudades">
+                            {{c.NOMBRE_CIUDAD|titlecase}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="m-r-8">
+                    <mat-label>Horario</mat-label>
+                    <mat-select required formControlName="id_horario" required>
+                        <mat-option [value]="h.ID_HORARIO" *ngFor="let h of horarios">
+                            {{h.HORA}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="m-r-8">
+                    <input matInput placeholder="Costo $" formControlName="costo" required>
+                </mat-form-field>
+                <span *ngIf="!editButton">
+                    <mat-form-field class="m-r-8">
+                        <mat-label>Hora de llegada</mat-label>
+                        <mat-select required formControlName="tiempo_est_ruta" required>
+                            <mat-option [value]="h.ID_HORARIO" *ngFor="let h of horarios">
+                                {{h.HORA}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </span>
+                <button mat-raised-button color="primary" (click)="registrarRuta()">Guardar</button>
+                <span class="button-space"></span>
+                <button mat-raised-button color="primary" (click)="cancelarRegistro()">Cancelar</button>
+
+            </form>
+        </mat-card-content>
+    </mat-card>
+
+    <br>
+
+    <span style="padding: 10px; float:right;">
+        <button mat-stroked-button (click)="!registroisactive?registroisactive=true:registroisactive=false "
+            color="primary">
+            <mat-icon>{{registroisactive?'arrow_drop_up':'arrow_drop_down' }}</mat-icon>
+        </button>
+        <button mat-stroked-button color="primary" (click)="refreshTable()">
+            <mat-icon>refresh</mat-icon>
+        </button>
+    </span>
+
+    <h3>Rutas para el dia de hoy</h3>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 ">
+
+        <ng-container matColumnDef="numeracion">
+            <th mat-header-cell *matHeaderCellDef>No.</th>
+            <td mat-cell *matCellDef="let element; let j = index"> {{j+1}} </td>
+        </ng-container>
+        <ng-container matColumnDef="id_ruta">
+            <th cell-centered mat-header-cell *matHeaderCellDef>Id_ruta</th>
+            <td cell-centered mat-cell *matCellDef="let element"> {{element.ID_RUTA}} </td>
+        </ng-container>
+        <ng-container matColumnDef="nombre_empresa">
+            <th cell-centered mat-header-cell *matHeaderCellDef>Empresa</th>
+            <td cell-centered mat-cell *matCellDef="let element"> {{element.NOMBRE_EMPRESA}} </td>
+        </ng-container>
+        <ng-container matColumnDef="ruta">
+            <th cell-centered mat-header-cell *matHeaderCellDef>Ruta</th>
+            <td cell-centered mat-cell *matCellDef="let element"> {{element.RUTA}} </td>
+        </ng-container>
+        <ng-container matColumnDef="nombre_chofer">
+            <th cell-centered mat-header-cell *matHeaderCellDef>Conductor</th>
+            <td cell-centered mat-cell *matCellDef="let element"> {{element.NOMBRE_CHOFER}} </td>
+        </ng-container>
+        <ng-container matColumnDef="numero_bus">
+            <th cell-centered mat-header-cell *matHeaderCellDef>No. bus</th>
+            <td cell-centered mat-cell *matCellDef="let element"> {{element.NUMERO_BUS}} </td>
+        </ng-container>
+        <ng-container matColumnDef="hora_salida">
+            <th cell-centered mat-header-cell *matHeaderCellDef>Hora salida</th>
+            <td cell-centered mat-cell *matCellDef="let element"> {{element.HORA_SALIDA}} </td>
+        </ng-container>
+        <ng-container matColumnDef="costo_salida">
+            <th cell-centered mat-header-cell *matHeaderCellDef>Costo</th>
+            <td cell-centered mat-cell *matCellDef="let element"> ${{element.COSTO_RUTA}} </td>
+        </ng-container>
+        <ng-container matColumnDef="opciones" sticky>
+            <th cell-centered mat-header-cell *matHeaderCellDef>Opciones</th>
+            <td cell-centered mat-cell *matCellDef="let element">
+                <button mat-icon-button (click)="editElem(element)">
+                    <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button (click)="ventaBoleto(element)">
+                    <mat-icon>credit_card</mat-icon>
+                </button>
+            </td>
+
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+
+    </table>
+
+</div>

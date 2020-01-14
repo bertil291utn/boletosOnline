@@ -1,0 +1,47 @@
+<mat-toolbar class="example-toolbar">
+    <button mat-icon-button (click)="backClicked()">
+        <mat-icon>keyboard_backspace</mat-icon>
+    </button>
+    <span class="fx-spacer"></span>
+    <button mat-button color="primary" (click)="saveBoleto()">GUARDAR</button>
+</mat-toolbar>
+<div class="component-body">
+    <mat-grid-list cols="4" rowHeight="20px">
+        <span class="title-grid-padding">
+            <strong>Chofer:</strong>
+            {{ruta.NOMBRE_CHOFER}}
+        </span>
+
+        <span class="title-grid-padding">
+            <strong>Ruta:</strong>
+            {{ruta.RUTA}}
+        </span>
+        <span class="title-grid-padding">
+            <strong>Unidad #:</strong>
+            {{ruta.NUMERO_BUS}}
+        </span>
+        <span class="title-grid-padding">
+            <strong>Hora:</strong>
+            {{ruta.HORA_SALIDA}}
+        </span>
+
+    </mat-grid-list>
+
+
+    <div style="margin: 5% 60% 0 0;">
+        <!-- <div> -->
+        <strong>Piso 1</strong>
+        <p>
+            <i style="color: gray; font-size: small;">Seleccione los asientos</i>
+        </p>
+        <mat-grid-list cols="4">
+            <mat-grid-tile *ngFor="let item of asientos">
+                <mat-checkbox [disabled]="asientos_reservados!=null?asientos_reservados.includes(item):false"
+                    (change)="showOptions($event)" labelPosition="before" [value]="item">{{item}}</mat-checkbox>
+            </mat-grid-tile>
+        </mat-grid-list>
+        <!-- </div> -->
+
+        <!-- <div>desarmar</div> -->
+
+    </div>

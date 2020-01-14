@@ -1,25 +1,31 @@
-<h3>Buses inactivos</h3>
+<mat-toolbar class="example-toolbar">
+    <button mat-icon-button (click)="backClicked()">
+        <mat-icon>keyboard_backspace</mat-icon>
+    </button>
+</mat-toolbar>
+<div class="component-body">
+    <h3>Buses inactivos</h3>
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 ">
-
+    
         <ng-container matColumnDef="numeracion">
             <th mat-header-cell *matHeaderCellDef>#</th>
             <td mat-cell *matCellDef="let element; let j = index"> {{j+1}} </td>
         </ng-container>
-
-
+    
+    
         <!-- Name Column -->
         <ng-container matColumnDef="numero_bus">
             <th cell-centered mat-header-cell *matHeaderCellDef>No. bus</th>
             <td cell-centered mat-cell *matCellDef="let element"> {{element.NUMERO_BUS}} </td>
         </ng-container>
-
+    
         <!-- Weight Column -->
         <ng-container matColumnDef="id_cond">
             <th mat-header-cell *matHeaderCellDef>Conductor</th>
             <td mat-cell *matCellDef="let element"> {{element.NOMBRE_COND|titlecase}}
                 {{element.APELLIDO_COND|titlecase}} </td>
         </ng-container>
-
+    
         <!-- Symbol Column -->
         <ng-container matColumnDef="asientos_bus">
             <th cell-centered mat-header-cell *matHeaderCellDef>No. asientos</th>
@@ -30,8 +36,8 @@
             <th cell-centered mat-header-cell *matHeaderCellDef>Dos Pisos</th>
             <td cell-centered mat-cell *matCellDef="let element"> {{element.DOS_PISOS_BUS==1?'Si':'No'}} </td>
         </ng-container>
-
-
+    
+    
         <ng-container matColumnDef="opciones" sticky>
             <th cell-centered mat-header-cell *matHeaderCellDef>Opciones</th>
             <td cell-centered mat-cell *matCellDef="let element">
@@ -41,7 +47,8 @@
     
             </td>
         </ng-container>
-
+    
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
+</div>

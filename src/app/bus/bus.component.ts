@@ -153,6 +153,7 @@ export class BusComponent implements OnInit {
         if (resp['status'] == 200) {
           this.registerForm.reset();
           this.refreshTable();
+          this.editButton = false
         }
       });
     }

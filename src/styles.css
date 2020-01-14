@@ -108,3 +108,7 @@ body {
   font-size: 0.9rem;
   color: #272727;
 }
+
+.component-body {
+  padding: 20px;
+}

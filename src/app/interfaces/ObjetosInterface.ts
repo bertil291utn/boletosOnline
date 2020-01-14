@@ -24,3 +24,13 @@ export interface Buses {
     asientos_bus: number;
     dos_pisos: string;
 }
+
+export interface Rutas {
+    id_ruta: number;
+    nombre_empresa: string;
+    ruta: number;
+    nombre_chofer: string;
+    numero_bus: string;
+    hora_salida: string;
+    costo: string;
+}

@@ -23,6 +23,7 @@ import {
    MatCardModule,
    MatDialogModule
 } from '@angular/material';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
    imports: [
@@ -46,7 +47,8 @@ import {
       MatPaginatorModule,
       MatMenuModule,
       MatCardModule,
-      MatDialogModule
+      MatDialogModule,
+      MatCheckboxModule
    ],
    exports: [
       MatButtonModule,
@@ -67,7 +69,8 @@ import {
       MatPaginatorModule,
       MatMenuModule,
       MatCardModule,
-      MatDialogModule
+      MatDialogModule,
+      MatCheckboxModule
    ],
    providers: [
       MatDatepickerModule,

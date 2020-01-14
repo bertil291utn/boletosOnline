@@ -31,6 +31,12 @@ export class NavService {
           route: rutaActual
         },
         {
+          displayName: 'Rutas',
+          iconName: 'departure_board',
+          enabled: varchecktoken == 'C' ? true : false,
+          route: 'rutas'
+        },
+        {
           displayName: 'Personas',
           iconName: 'person',
           enabled: true,
@@ -50,7 +56,7 @@ export class NavService {
         {
           displayName: 'Buses',
           iconName: 'directions_bus',
-          enabled:  varchecktoken == 'C' ? true : false,
+          enabled: varchecktoken == 'C' ? true : false,
           route: 'bus'
         }
       ];

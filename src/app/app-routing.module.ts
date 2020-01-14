@@ -10,6 +10,8 @@ import { ConductorComponent } from './conductor/conductor.component';
 import { CondInactivosComponent } from './cond-inactivos/cond-inactivos.component';
 import { BusComponent } from './bus/bus.component';
 import { BusInactivosComponent } from './bus-inactivos/bus-inactivos.component';
+import { RutaComponent } from './ruta/ruta.component';
+import { VentaBolComponent } from './venta-bol/venta-bol.component';
 
 
 const routes: Routes = [
@@ -31,6 +33,9 @@ const routes: Routes = [
           { path: 'condinactivo', component: CondInactivosComponent },
           { path: 'bus', component: BusComponent },
           { path: 'businactivo', component: BusInactivosComponent },
+          { path: 'bus', component: BusComponent },
+          { path: 'rutas', component: RutaComponent },
+          { path: 'boletos', component: VentaBolComponent }
         ]
       },
 
